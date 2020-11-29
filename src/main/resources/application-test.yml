@@ -1,0 +1,26 @@
+server:
+  port: 9090
+spring:
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          configuration:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value.deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+          broker:
+            - kafka-broker:7092
+      bindings:
+        input:
+          binder: kafka
+          destination: taxi-booking
+          content-type: text/plain
+          group: input-group-1
+        output:
+          binder: kafka
+          destination: taxi-booking
+          group: output-group-1
+          content-type: text/plain
